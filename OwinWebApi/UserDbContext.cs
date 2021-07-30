@@ -68,7 +68,7 @@ namespace OwinWebApi
                 ClaimValue = "User"
             });
 
-            var store = new UserStore(context);
+            var store = new MyUserStore(context);
             store.AddUser(john, "JohnsPassword");
             store.AddUser(jimi, "JimisPassword");
         }

@@ -45,6 +45,9 @@
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
@@ -96,17 +99,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\CompaniesController.cs" />
+    <Compile Include="IdentityAuthModels\ApplicationContext.cs" />
+    <Compile Include="IdentityAuthModels\ApplicationUser.cs" />
+    <Compile Include="IdentityAuthModels\ApplicationUserManager.cs" />
     <Compile Include="UserDbContext.cs" />
-    <Compile Include="Models\Company.cs" />
-    <Compile Include="Models\PasswordHasher.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserClaim.cs" />
+    <Compile Include="CustomAuthModels\Company.cs" />
+    <Compile Include="CustomAuthModels\PasswordHasher.cs" />
+    <Compile Include="CustomAuthModels\User.cs" />
+    <Compile Include="CustomAuthModels\UserClaim.cs" />
     <Compile Include="OAuthServerProvider\ApplicationOAuthServerProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\ICompanyService.cs" />
-    <Compile Include="Services\UserStore.cs" />
+    <Compile Include="CustomAuthModels\MyUserStore.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

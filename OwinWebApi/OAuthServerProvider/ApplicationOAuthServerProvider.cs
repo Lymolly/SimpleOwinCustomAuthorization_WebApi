@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.Owin.Security.OAuth;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Owin.Security.OAuth;
+using Microsoft.AspNet.Identity.Owin;
 using OwinWebApi.Models;
-using OwinWebApi.Services;
 
 namespace OwinWebApi.OAuthServerProvider
 {
@@ -20,23 +16,21 @@ namespace OwinWebApi.OAuthServerProvider
         }
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            UserStore store = new UserStore(new UserDbContext());
-            User user = await store.FindByEmailAsync(context.UserName);
-
-            if (user == null || !store.IsPasswordValid(user,context.Password))
+            var manager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+            var user = await manager.FindAsync(context.UserName, context.Password);
+            if (user == null)
             {
                 context.SetError("invalid_grant",
-                    "The user name or password is incorrect.");
+                    "Authorization failed! username or password is incorrect");
                 context.Rejected();
                 return;
             }
 
-            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+            ClaimsIdentity identity = new ClaimsIdentity(context.Options.AuthenticationType);
             foreach (var claim in user.Claims)
             {
-                identity.AddClaim(new Claim(claim.ClaimType,claim.ClaimValue));
+                identity.AddClaim(new Claim(claim.ClaimType, claim.ClaimValue));
             }
-
             context.Validated(identity);
         }
     }

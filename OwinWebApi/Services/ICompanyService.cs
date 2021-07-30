@@ -10,10 +10,10 @@ namespace OwinWebApi.Services
 {
     public interface ICompanyService
     {
-        IEnumerable<Company> GetAll();
-        Company Get(int id);
-        bool Post(Company company);
-        bool Put(Company company);
-        bool Delete(int id);
+        IEnumerable<Company> GetAll(ApplicationDbContext context);
+        Company Get(int id, ApplicationDbContext context);
+        bool Post(Company company, ApplicationDbContext context);
+        bool Put(Company company, ApplicationDbContext context);
+        bool Delete(int id, ApplicationDbContext context);
     }
 }

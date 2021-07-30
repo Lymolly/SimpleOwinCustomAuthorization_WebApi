@@ -8,11 +8,11 @@ using OwinWebApi.Models;
 
 namespace OwinWebApi.Services
 {
-    public class UserStore
+    public class MyUserStore
     {
         private UserDbContext _context;
 
-        public UserStore(UserDbContext context)
+        public MyUserStore(UserDbContext context)
         {
             _context = context;
         }

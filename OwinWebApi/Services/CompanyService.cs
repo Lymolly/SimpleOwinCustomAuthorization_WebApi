@@ -1,58 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Microsoft.Owin;
 using OwinWebApi.Models;
 
 namespace OwinWebApi.Services
 {
     class CompanyService : ICompanyService
     {
-        private static List<Company> _db = new List<Company>
+        public IEnumerable<Company> GetAll(ApplicationDbContext context)
         {
-            new Company { Id = 1, Name = "Microsoft" },
-            new Company { Id = 2, Name = "Google" },
-            new Company { Id = 3, Name = "Apple" }
-        };
-        public IEnumerable<Company> GetAll()
-        {
-            return _db;
+            return context.Companies;
         }
 
-        public Company Get(int id)
+        public Company Get(int id, ApplicationDbContext context)
         {
-            return _db.FirstOrDefault(c => c.Id == id);
+            return context.Companies.FirstOrDefault(c => c.Id == id);
         }
 
-        public bool Post(Company company)
+        public bool Post(Company company, ApplicationDbContext context)
         {
             if (company == null)
             {
                 return false;
             }
 
-            var companyExists = _db.Any(c => c.Id == company.Id);
+            var companyExists = context.Companies.Any(c => c.Id == company.Id);
             if (companyExists)
             {
                 return false;
             }
 
-            _db.Add(company);
+            context.Companies.Add(company);
             //Savechanges
             return true;
 
         }
 
-        public bool Put(Company company)
+        public bool Put(Company company, ApplicationDbContext context)
         {
             if (company == null)
             {
                 return false;
             }
 
-            var existing = _db.FirstOrDefault(c => c.Id == company.Id);
+            var existing = context.Companies.FirstOrDefault(c => c.Id == company.Id);
             if (existing == null)
             {
                 return false;
@@ -63,14 +59,14 @@ namespace OwinWebApi.Services
             return true;
         }
 
-        public bool Delete(int id)
+        public bool Delete(int id, ApplicationDbContext context)
         {
-            var company = _db.FirstOrDefault(c => c.Id == id);
+            var company = context.Companies.FirstOrDefault(c => c.Id == id);
             if (company == null)
             {
                 return false;
             }
-            _db.Remove(company);
+            context.Companies.Remove(company);
             return true;
         }
     }

@@ -3,6 +3,7 @@ using System.Web.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
+using OwinWebApi.Models;
 using OwinWebApi.OAuthServerProvider;
 
 namespace OwinWebApi
@@ -18,6 +19,8 @@ namespace OwinWebApi
         }
         private void ConfigureAuth(IAppBuilder app)
         {
+            app.CreatePerOwinContext<ApplicationDbContext>(ApplicationDbContext.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             var OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/Token"),
